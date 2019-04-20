@@ -9,7 +9,16 @@ var FormView = {
   handleSubmit: function(event) {
     // Stop the browser from submitting the form
     event.preventDefault();
-    
+    var newMessage = {
+      username: App.username,
+      text: $('#message')['0'].value,
+      roomname: $('#rooms select')['0'].value 
+    };
+
+    $('#chats').append(Parse.create(newMessage));
+    $('#chats').empty();
+    App.fetch();
+
     console.log('click!');
   },
 

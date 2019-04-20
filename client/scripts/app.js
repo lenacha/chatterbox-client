@@ -21,17 +21,27 @@ var App = {
       // examine the response from the server request:
       Messages.data = data.results;
       console.log(data.results);
-      // var allData = Messages.data;
-      // var text = '';
-      // for (var i = 0; i < 20; i ++) {
-      //   if (allData[i].roomname) {
-      //     MessageView.render(allData[i])
-      //   }
-      // }
-      // //console.log(text)
-      // //$('#chats').append($('#message'))
       callback();
-      
+      for (let i = 0; i < Messages.data.length; i++) {
+        var message = Messages.data[i]; 
+        if (message.username === undefined) {
+          message.username = "";
+        }
+        if (message.text === undefined) {
+          message.text = "";
+        }
+        if (message.roomname === undefined) {
+          message.roomname = "";
+        }
+        if(!Rooms.roomList.includes(message.roomname)){
+          Rooms.roomList.push(message.roomname);
+          RoomsView.renderRoom(message.roomname);
+          Rooms.storage[message.roomname] = [];
+        }
+        Rooms.storage[message.roomname].push(message);
+        MessagesView.renderMessage(message);
+        
+      }
     });
   },
 
