@@ -9,7 +9,7 @@ var MessagesView = {
         MessagesView.renderMessage(Rooms.storage[$('#rooms select')['0'].value][i]);
       }
     });
-     $('#goback').click(function(){
+    $('#goback').click(function(){
       $('#chats').empty();
       App.initialize();
     });
@@ -21,15 +21,4 @@ var MessagesView = {
     this.$chats.append(result);
     console.log(Messages.data);
   }
-
-
-
-  // render: _.template(`
-  //     <!--
-  //     <div class="chat">
-  //       <div class="username"></div>
-  //       <div></div>
-  //     </div>
-  //     -->
-  //   `)
 };

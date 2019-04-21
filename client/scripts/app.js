@@ -9,11 +9,11 @@ var App = {
     FormView.initialize();
     RoomsView.initialize();
     MessagesView.initialize();
-
+    
     // Fetch initial batch of messages
     App.startSpinner();
     App.fetch(App.stopSpinner);
-
+    Friends.toggleStatus();
   },
 
   fetch: function(callback = ()=>{}) {
@@ -22,6 +22,7 @@ var App = {
       Messages.data = data.results;
       console.log(data.results);
       callback();
+      
       for (let i = 0; i < Messages.data.length; i++) {
         var message = Messages.data[i]; 
         if (message.username === undefined) {
