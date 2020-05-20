@@ -17,13 +17,36 @@ var App = {
 
   },
 
-  fetch: function(callback = ()=>{}) {
+  fetch: function(callback = ()=>{}) { 
+    App.clear();
     Parse.readAll((data) => {
       // examine the response from the server request:
-      console.log(data);
-
+      let items = data.results;
+      for(let i = 0; i < items.length; i++) {
+        let item = items[i];
+        if(item.username === undefined) {
+          item.username = '';
+        }
+        if(item.text === undefined) {
+          item.text = '';
+        }
+        if(item.roomname === undefined) {
+          item.roomname = '';
+        }
+        Messages[item.objectId] = item;
+        MessagesView.renderMessage(item);
+        if(Rooms[item.roomname] === undefined) {
+          Rooms[item.roomname] = item.roomname;
+          RoomsView.renderRoom(item.roomname);
+        }
+      }
       callback();
     });
+  },
+
+  clear: function() {
+    Messages = {};    
+    MessagesView.clear();
   },
 
   startSpinner: function() {
